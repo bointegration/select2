@@ -899,9 +899,9 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             opts = $.extend({}, {
-                populateResults: function(container, results, query) {
+                populateResults: function(container, results, query, isPushOption) {
                     var populate, id=this.opts.id, liveRegion=this.liveRegion;
-
+                    var isPushOption = isPushOption
                     populate=function(results, container, depth) {
 
                         var i, l, result, selectable, disabled, compound, node, label, innerContainer, formatted;
@@ -910,7 +910,14 @@ the specific language governing permissions and limitations under the Apache Lic
                         var option = document.createElement("option");
                         option.text = "";
                         option.value = "";
-                        results.unshift(option)
+                        var blankOption = results.filter(function (o) {
+                            return !o.text == "";
+                        });
+                        if(isPushOption){
+                            isPushOption = false;
+                            results.unshift(option);
+                        }
+
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
                             result=results[i];
@@ -1097,7 +1104,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     this.attachEvent("onpropertychange", sync);
                 });
             }
-            
+
             // safari, chrome, firefox, IE11
             observer = window.MutationObserver || window.WebKitMutationObserver|| window.MozMutationObserver;
             if (observer !== undefined) {
@@ -1757,7 +1764,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 }
 
                 results.empty();
-                self.opts.populateResults.call(this, results, data.results, {term: search.val(), page: this.resultsPage, context:null});
+                self.opts.populateResults.call(this, results, data.results, {term: search.val(), page: this.resultsPage, context:null}, true);
 
                 if (data.more === true && checkFormatter(opts.formatLoadMore, "formatLoadMore")) {
                     results.append("<li class='select2-more-results'>" + self.opts.escapeMarkup(evaluate(opts.formatLoadMore, this.resultsPage)) + "</li>");
@@ -3380,8 +3387,8 @@ the specific language governing permissions and limitations under the Apache Lic
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Please enter " + n + " or more character" + (n == 1? "" : "s"); },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Please delete " + n + " character" + (n == 1? "" : "s"); },
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
-        formatLoadMore: function (pageNumber) { return "Loading more resultsâ€¦"; },
-        formatSearching: function () { return "Searchingâ€¦"; },
+        formatLoadMore: function (pageNumber) { return "Loading more results…"; },
+        formatSearching: function () { return "Searching…"; },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumInputLength: null,
