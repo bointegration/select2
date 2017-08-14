@@ -2054,7 +2054,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.search.attr("aria-owns", "select2-results-"+idSuffix);
 
             // rewrite labels from original element to focusser
-            this.focusser.attr("id", "s2id_autogen"+idSuffix);
+            this.focusser.attr("id", this.opts.element.attr("id") || "s2id_autogen"+idSuffix);
 
             elementLabel = $("label[for='" + this.opts.element.attr("id") + "']");
 
