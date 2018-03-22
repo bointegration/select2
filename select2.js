@@ -1482,8 +1482,6 @@ the specific language governing permissions and limitations under the Apache Lic
 
             child = $(children[index]);
 
-            hb = child.offset().top + child.outerHeight(true);
-
             // if this is the last child lets also make sure select2-more-results is visible
             if (index === children.length - 1) {
                 more = results.find("li.select2-more-results");
@@ -1496,7 +1494,6 @@ the specific language governing permissions and limitations under the Apache Lic
             if (hb > rb) {
                 results.scrollTop(results.scrollTop() + (hb - rb));
             }
-            y = child.offset().top - results.offset().top;
 
             // make sure the top of the element is visible
             if (y < 0 && child.css('display') != 'none' ) {
@@ -3387,8 +3384,8 @@ the specific language governing permissions and limitations under the Apache Lic
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Please enter " + n + " or more character" + (n == 1? "" : "s"); },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Please delete " + n + " character" + (n == 1? "" : "s"); },
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
-        formatLoadMore: function (pageNumber) { return "Loading more results…"; },
-        formatSearching: function () { return "Searching…"; },
+        formatLoadMore: function (pageNumber) { return "Loading more resultsï¿½"; },
+        formatSearching: function () { return "Searchingï¿½"; },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumInputLength: null,
