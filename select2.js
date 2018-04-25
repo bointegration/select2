@@ -2250,7 +2250,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.opts.initSelection.call(null, this.opts.element, function(selected){
                     if (selected !== undefined && selected !== null) {
                         self.updateSelection(selected);
-                        self.close();
+                       // self.close();
                         self.setPlaceholder();
                         self.nextSearchTerm = self.opts.nextSearchTerm(selected, self.search.val());
                     }
