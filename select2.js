@@ -2388,7 +2388,7 @@ the specific language governing permissions and limitations under the Apache Lic
               }
               
             if(target && target.hasClass('select2delete')){
-                var elemId = $(target).data('expense');
+                var elemId = $(target).data('id');
                 var elemType = $(target).data('type');
                 var elemName = $(target).data('name');
                 var event = new CustomEvent('delete',{detail: {id: elemId, type: elemType, name: elemName}});
