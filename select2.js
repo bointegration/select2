@@ -2381,6 +2381,20 @@ the specific language governing permissions and limitations under the Apache Lic
 
             if (!this.triggerSelect(data)) { return; }
 
+            var target;
+              
+              if (options != null) {
+                  target = $(options.target);
+              }
+              
+            if(target && target.hasClass('select2delete')){
+                var elemId = $(target).data('expense');
+                var elemType = $(target).data('type');
+                var elemName = $(target).data('name');
+                var event = new CustomEvent('delete',{detail: {id: elemId, type: elemType, name: elemName}});
+                document.dispatchEvent(event);
+              }
+            
             var old = this.opts.element.val(),
                 oldData = this.data();
 
