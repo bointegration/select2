@@ -2393,6 +2393,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 var elemName = $(target).data('name');
                 var event = new CustomEvent('delete',{detail: {id: elemId, type: elemType, name: elemName}});
                 document.dispatchEvent(event);
+                return this.close();
               }
             
             var old = this.opts.element.val(),
