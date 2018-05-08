@@ -913,10 +913,12 @@ the specific language governing permissions and limitations under the Apache Lic
                         var blankOption = results.filter(function (o) {
                             return !o.text == "";
                         });
-                        if(isPushOption){
-                            isPushOption = false;
-                            results.unshift(option);
-                        }
+                        
+                            results.unshift({id: "", text: " "});
+
+                        
+
+                        
 
                         for (i = 0, l = results.length; i < l; i = i + 1) {
 
@@ -2386,7 +2388,6 @@ the specific language governing permissions and limitations under the Apache Lic
               if (options != null) {
                   target = $(options.target);
               }
-              
             if(target && target.hasClass('select2delete')){
                 var elemId = $(target).data('id');
                 var elemType = $(target).data('type');
