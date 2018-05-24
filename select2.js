@@ -915,6 +915,7 @@ the specific language governing permissions and limitations under the Apache Lic
                         });
                         
                             results.unshift({id: "", text: " "});
+                            
 
                         
 
@@ -1476,7 +1477,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 // that way any unselectable headers above it will also be scrolled
                 // into view
 
-                results.scrollTop(0);
+             //   results.scrollTop(0);
                 return;
             }
 
@@ -2245,7 +2246,8 @@ the specific language governing permissions and limitations under the Apache Lic
             var selected;
             if (this.isPlaceholderOptionSelected()) {
                 this.updateSelection(null);
-                this.close();
+                this.updateResults(true);
+                //this.close();
                 this.setPlaceholder();
             } else {
                 var self = this;
@@ -2392,12 +2394,12 @@ the specific language governing permissions and limitations under the Apache Lic
                 var elemId = $(target).data('id');
                 var elemType = $(target).data('type');
                 var elemName = $(target).data('name');
-                var event = new CustomEvent('delete',{detail: {id: elemId, type: elemType, name: elemName}});
+                var event = new CustomEvent(elemType+'delete',{detail: {id: elemId, type: elemType, name: elemName}});
                 document.dispatchEvent(event);
                 return this.close();
               }else if(target && target.hasClass('add-new')){
                 var elemType = $(target).data('type');
-                var event = new CustomEvent('addNew',{detail: {type: elemType}});
+                var event = new CustomEvent(elemType+'addNew',{detail: {type: elemType}});
                 document.dispatchEvent(event);
                 return this.close();
               }
