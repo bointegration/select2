@@ -2254,6 +2254,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 this.opts.initSelection.call(null, this.opts.element, function(selected){
                     if (selected !== undefined && selected !== null) {
                         self.updateSelection(selected);
+                        self.updateResults(true);
                        // self.close();
                         self.setPlaceholder();
                         self.nextSearchTerm = self.opts.nextSearchTerm(selected, self.search.val());
@@ -2390,7 +2391,14 @@ the specific language governing permissions and limitations under the Apache Lic
               if (options != null) {
                   target = $(options.target);
               }
-            if(target && target.hasClass('select2delete')){
+            if(target && target.hasClass('select2delete') ){
+                var elemId = $(target).data('id');
+                var elemType = $(target).data('type');
+                var elemName = $(target).data('name');
+                var event = new CustomEvent(elemType+'delete',{detail: {id: elemId, type: elemType, name: elemName}});
+                document.dispatchEvent(event);
+                return this.close();
+              }else if(target && target.hasClass('select2View') ){
                 var elemId = $(target).data('id');
                 var elemType = $(target).data('type');
                 var elemName = $(target).data('name');
