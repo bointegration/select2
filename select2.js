@@ -2402,7 +2402,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 var elemId = $(target).data('id');
                 var elemType = $(target).data('type');
                 var elemName = $(target).data('name');
-                var event = new CustomEvent(elemType+'delete',{detail: {id: elemId, type: elemType, name: elemName}});
+                var event = new CustomEvent(elemType+'detail',{detail: {id: elemId, type: elemType, name: elemName}});
                 document.dispatchEvent(event);
                 return this.close();
               }else if(target && target.hasClass('add-new')){
