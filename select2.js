@@ -913,8 +913,6 @@ the specific language governing permissions and limitations under the Apache Lic
                         var blankOption = results.filter(function (o) {
                             return !o.text == "";
                         });
-                        
-                            results.unshift({id: "", text: " "});
                             
 
                         
