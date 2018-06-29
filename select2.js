@@ -1630,7 +1630,7 @@ the specific language governing permissions and limitations under the Apache Lic
          * @param initial whether or not this is the call to this method right after the dropdown has been opened
          */
         // abstract
-        updateResults: function (initial) {
+        updateResults: function (initial, toPostRender) {
             var search = this.search,
                 results = this.results,
                 opts = this.opts,
@@ -1665,6 +1665,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
             function render(html) {
                 results.html(html);
+                if(!toPostRender)
                 postRender();
             }
 
@@ -2237,7 +2238,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var selected;
             if (this.isPlaceholderOptionSelected()) {
                 this.updateSelection(null);
-                this.updateResults(true);
+                this.updateResults(true ,true);
                 //this.close();
                 this.setPlaceholder();
             } else {
