@@ -1184,7 +1184,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         opened: function () {
-            return this.container.hasClass("select2-dropdown-open");
+            return this.container && this.container.hasClass("select2-dropdown-open");
         },
 
         // abstract
@@ -2948,54 +2948,79 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // multi
         onSelect: function (data, options) {
+            var target;
+              
+              if (options != null) {
+                  target = $(options.target);
+              }
+            if(target && target.hasClass('select2delete') ){
+                var elemId = $(target).data('id');
+                var elemType = $(target).data('type');
+                var elemName = $(target).data('name');
+                var event = new CustomEvent(elemType+'delete',{detail: {id: elemId, type: elemType, name: elemName}});
+                document.dispatchEvent(event);
+                return this.close();
+              }else if(target && target.hasClass('select2View') ){
+                var elemId = $(target).data('id');
+                var elemType = $(target).data('type');
+                var elemName = $(target).data('name');
+                var event = new CustomEvent(elemType+'detail',{detail: {id: elemId, type: elemType, name: elemName}});
+                document.dispatchEvent(event);
+                return this.close();
+              }else if(target && target.hasClass('add-new')){
+                var elemType = $(target).data('type');
+                var event = new CustomEvent(elemType+'addNew',{detail: {type: elemType}});
+                document.dispatchEvent(event);
+                return this.close();
+              }else{
+                if (!this.triggerSelect(data)) { return; }
 
-            if (!this.triggerSelect(data)) { return; }
-
-            this.addSelectedChoice(data);
-
-            this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
-
-            // keep track of the search's value before it gets cleared
-            this.nextSearchTerm = this.opts.nextSearchTerm(data, this.search.val());
-
-            this.clearSearch();
-            this.updateResults();
-
-            if (this.select || !this.opts.closeOnSelect) this.postprocessResults(data, false, this.opts.closeOnSelect===true);
-
-            if (this.opts.closeOnSelect) {
-                this.close();
-                this.search.width(10);
-            } else {
-                if (this.countSelectableResults()>0) {
-                    this.search.width(10);
-                    this.resizeSearch();
-                    if (this.getMaximumSelectionSize() > 0 && this.val().length >= this.getMaximumSelectionSize()) {
-                        // if we reached max selection size repaint the results so choices
-                        // are replaced with the max selection reached message
-                        this.updateResults(true);
-                    } else {
-                        // initializes search's value with nextSearchTerm and update search result
-                        if(this.nextSearchTerm != undefined){
-                            this.search.val(this.nextSearchTerm);
-                            this.updateResults();
-                            this.search.select();
-                        }
-                    }
-                    this.positionDropdown();
-                } else {
-                    // if nothing left to select close
+                this.addSelectedChoice(data);
+    
+                this.opts.element.trigger({ type: "selected", val: this.id(data), choice: data });
+    
+                // keep track of the search's value before it gets cleared
+                this.nextSearchTerm = this.opts.nextSearchTerm(data, this.search.val());
+                this.clearSearch();
+                this.updateResults();
+    
+                if (this.select || !this.opts.closeOnSelect) this.postprocessResults(data, false, this.opts.closeOnSelect===true);
+    
+                if (this.opts.closeOnSelect) {
                     this.close();
                     this.search.width(10);
+                } else {
+                    if (this.countSelectableResults()>0) {
+                        this.search.width(10);
+                        this.resizeSearch();
+                        if (this.getMaximumSelectionSize() > 0 && this.val().length >= this.getMaximumSelectionSize()) {
+                            // if we reached max selection size repaint the results so choices
+                            // are replaced with the max selection reached message
+                            this.updateResults(true);
+                        } else {
+                            // initializes search's value with nextSearchTerm and update search result
+                            if(this.nextSearchTerm != undefined){
+                                this.search.val(this.nextSearchTerm);
+                                this.updateResults();
+                                this.search.select();
+                            }
+                        }
+                        this.positionDropdown();
+                    } else {
+                        // if nothing left to select close
+                        this.close();
+                        this.search.width(10);
+                    }
                 }
-            }
-
-            // since its not possible to select an element that has already been
-            // added we do not need to check if this is a new element before firing change
-            this.triggerChange({ added: data });
-
-            if (!options || !options.noFocus)
-                this.focusSearch();
+    
+                // since its not possible to select an element that has already been
+                // added we do not need to check if this is a new element before firing change
+                this.triggerChange({ added: data });
+    
+                if (!options || !options.noFocus)
+                    this.focusSearch();      
+              }
+            
         },
 
         // multi
